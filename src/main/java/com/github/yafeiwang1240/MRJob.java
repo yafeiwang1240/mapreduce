@@ -8,6 +8,7 @@ import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.lib.input.MultipleInputs;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
@@ -50,34 +51,35 @@ public class MRJob {
         textRead(args);
     }
 
-    private static boolean textRead(String[] args)  throws IOException, ClassNotFoundException, InterruptedException {
+    private static boolean textRead(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
         Configuration configuration = new Configuration();
 
         Job job = Job.getInstance(configuration);
         job.setJarByClass(MRJob.class);
         job.setJobName("textReader");
-        job.setMapperClass(TextMapper.class);
-
-        TextInputFormat.addInputPath(job, new Path("/user/hive/warehouse/pub_insert_test"));
-        job.setInputFormatClass(TextInputFormat.class);
+//        job.setMapperClass(TextMapper.class);
+//        TextInputFormat.addInputPath(job, new Path("/user/hive/warehouse/pub_insert_test"));
+//        job.setInputFormatClass(TextInputFormat.class);
+        MultipleInputs.addInputPath(job, new Path("/user/hive/warehouse/pub_insert_test"),
+                TextInputFormat.class, TextMapper.class);
         job.setNumReduceTasks(0);
-
         job.setOutputFormatClass(TextOutputFormat.class);
         FileOutputFormat.setOutputPath(job, new Path("/temp/text"));
 
         return job.waitForCompletion(true);
     }
 
-    private static boolean orcRead(String[] args)  throws IOException, ClassNotFoundException, InterruptedException {
+    private static boolean orcRead(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
         Configuration configuration = new Configuration();
 
         Job job = Job.getInstance(configuration);
         job.setJarByClass(MRJob.class);
         job.setJobName("orcReader");
-        job.setMapperClass(ORCMapper.class);
-
-        OrcInputFormat.addInputPath(job, new Path("/user/hive/warehouse/pub_insert_test"));
-        job.setInputFormatClass(OrcInputFormat.class);
+//        job.setMapperClass(ORCMapper.class);
+//        OrcInputFormat.addInputPath(job, new Path("/user/hive/warehouse/pub_insert_test"));
+//        job.setInputFormatClass(OrcInputFormat.class);
+        MultipleInputs.addInputPath(job, new Path("/user/hive/warehouse/pub_insert_test"),
+                OrcInputFormat.class, ORCMapper.class);
         job.setNumReduceTasks(0);
 
         job.setOutputFormatClass(TextOutputFormat.class);
