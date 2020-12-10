@@ -1,6 +1,6 @@
 package com.github.yafeiwang1240;
 
-import com.github.yafeiwang1240.job.OrcJob;
+import com.github.yafeiwang1240.job.CombineJob;
 
 import java.io.IOException;
 
@@ -11,7 +11,7 @@ import java.io.IOException;
 public class MRJob {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
-        if (!OrcJob.readAndWrite(args)) {
+        if (!CombineJob.readAndWrite(args)) {
             System.exit(-1);
         }
     }
