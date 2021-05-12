@@ -1,5 +1,6 @@
 package com.github.yafeiwang1240.mapper;
 
+import com.github.yafeiwang1240.utils.CustomConfig;
 import com.github.yafeiwang1240.utils.HBaseUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.hadoop.hbase.client.Result;
@@ -22,8 +23,9 @@ public class HFileMapper extends TableMapper<NullWritable, OrcStruct> {
 
     @Override
     protected void setup(Context context) throws IOException, InterruptedException {
-        schema = TypeDescription.fromString(OrcConf.MAPRED_OUTPUT_SCHEMA.getString(context.getConfiguration()));
-        timestamp = 0L;
+        schema = TypeDescription.fromString(
+                OrcConf.MAPRED_OUTPUT_SCHEMA.getString(context.getConfiguration()));
+        timestamp = CustomConfig.HFILE_TIMESTAMP.getLong(context.getConfiguration());
     }
 
     @Override
