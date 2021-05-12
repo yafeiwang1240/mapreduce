@@ -11,6 +11,7 @@
     <properties>
         <hive.version>1.2.1</hive.version>
         <hadoop.version>2.7.3</hadoop.version>
+        <hbase.version>1.2.6</hbase.version>
     </properties>
 
     <dependencies>
@@ -33,6 +34,12 @@
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-mapreduce-client-jobclient</artifactId>
             <version>${hadoop.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.hbase/hbase-server -->
+        <dependency>
+            <groupId>org.apache.hbase</groupId>
+            <artifactId>hbase-server</artifactId>
+            <version>${hbase.version}</version>
         </dependency>
     </dependencies>
 
